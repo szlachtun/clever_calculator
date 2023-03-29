@@ -51,7 +51,7 @@ def eval_rpn(tokens):
     stack = deque()
     operators = {'+', '-', '*', '/', '^'}
     if len(tokens) == 1:
-        return int(tokens[0])
+        return tokens[0]
     for token in tokens:
         if token not in operators:
             stack.append(int(token))
@@ -66,7 +66,7 @@ def eval_rpn(tokens):
             elif token == '*':
                 tmp = fir_operand * sec_operand
             elif token == '/':
-                tmp = int(fir_operand / sec_operand)
+                tmp = fir_operand / sec_operand
             elif token == '^':
                 tmp = fir_operand ** sec_operand
             stack.append(tmp)

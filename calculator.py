@@ -40,7 +40,7 @@ def is_assign(string):
 
 def process_expr(string):
     parsed_vars = re.findall(r'\d?[A-Za-z]+', string)
-    for parsed_var in parsed_vars:
+    for parsed_var in set(parsed_vars):
         if parsed_var in variables.keys():
             string = string.replace(parsed_var, str(variables[parsed_var]))
         elif re.match(r'\d', parsed_var):
@@ -56,6 +56,17 @@ def process_expr(string):
 
     string = re.sub(r' *- *', '-', re.sub(r' *\+ *', '+', string))
     string = re.sub(r'\++', '+', string.replace('--', '+')).replace('+-', '-').strip(' ')
+
+    if '.' in string:
+        try:
+            return float(string)
+        except ValueError:
+            pass
+    else:
+        try:
+            return int(string)
+        except ValueError:
+            pass
     return converter.eval_rpn(converter.create_rpn(converter.prettify_expr(string)))
 
 
